@@ -9,6 +9,24 @@ export async function fetchPropertiesFromApi(): Promise<Property[]> {
   return json.data;
 }
 
+export async function loginWithApi(email: string, password?: string): Promise<{
+  id: string;
+  name: string;
+  email: string;
+  role: 'client' | 'admin' | 'worker';
+  roleTitle?: string;
+  avatarUrl?: string;
+}> {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Login failed');
+  return json.data;
+}
+
 export async function fetchRequestsFromApi(): Promise<ServiceRequest[]> {
   const res = await fetch(`${API_BASE}/requests`, { cache: 'no-store' });
   const json = await res.json();
