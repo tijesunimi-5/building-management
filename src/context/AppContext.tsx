@@ -47,12 +47,12 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentRole, setCurrentRole] = useState<RoleType>('public');
-  const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
-  const [requests, setRequests] = useState<ServiceRequest[]>(INITIAL_REQUESTS);
-  const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
-  const [workers, setWorkers] = useState<WorkerInfo[]>(INITIAL_WORKERS);
-  const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('proj-501');
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [requests, setRequests] = useState<ServiceRequest[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [workers, setWorkers] = useState<WorkerInfo[]>([]);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [isLoadingApi, setIsLoadingApi] = useState<boolean>(true);
 
   // Fetch initial live data from backend REST API
@@ -66,15 +66,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         fetchWorkersFromApi()
       ]);
 
-      if (propsData.status === 'fulfilled' && propsData.value.length > 0) setProperties(propsData.value);
-      if (reqsData.status === 'fulfilled' && reqsData.value.length > 0) setRequests(reqsData.value);
-      if (projsData.status === 'fulfilled' && projsData.value.length > 0) {
+      if (propsData.status === 'fulfilled') setProperties(propsData.value);
+      if (reqsData.status === 'fulfilled') setRequests(reqsData.value);
+      if (projsData.status === 'fulfilled') {
         setProjects(projsData.value);
-        setSelectedProjectId(projsData.value[0].id);
+        if (projsData.value.length > 0) setSelectedProjectId(projsData.value[0].id);
       }
-      if (wrksData.status === 'fulfilled' && wrksData.value.length > 0) setWorkers(wrksData.value);
+      if (wrksData.status === 'fulfilled') setWorkers(wrksData.value);
     } catch (err) {
-      console.warn('Backend API offline or unreachable, using local fallback data:', err);
+      console.warn('Error fetching live backend data:', err);
     } finally {
       setIsLoadingApi(false);
     }
