@@ -38,11 +38,11 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
     setTasks(prev => prev.filter((_, idx) => idx !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedWorkerId) return;
 
-    convertRequestToProject(
+    await convertRequestToProject(
       request.id,
       selectedWorkerId,
       priority,

@@ -3,6 +3,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { RoleType, Property, ServiceRequest, Project, WorkerInfo, AppNotification, PhotoCategory } from '../types';
 import { INITIAL_PROPERTIES, INITIAL_REQUESTS, INITIAL_PROJECTS, INITIAL_WORKERS, INITIAL_NOTIFICATIONS } from '../data/mockData';
+import {
+  fetchPropertiesFromApi,
+  fetchRequestsFromApi,
+  createRequestApi,
+  fetchProjectsFromApi,
+  triageProjectApi,
+  fetchWorkersFromApi,
+  addWorkerApi,
+  removeWorkerApi
+} from '../lib/api';
 
 interface AppContextType {
   currentRole: RoleType;
@@ -14,10 +24,11 @@ interface AppContextType {
   notifications: AppNotification[];
   selectedProjectId: string;
   setSelectedProjectId: (id: string) => void;
+  isLoadingApi: boolean;
   
   // Actions
-  submitServiceRequest: (requestData: Omit<ServiceRequest, 'id' | 'referenceNumber' | 'createdAt' | 'status'>) => ServiceRequest;
-  convertRequestToProject: (requestId: string, workerId: string, priority: 'Low' | 'Medium' | 'High' | 'Urgent', observations: string, tasks: string[]) => Project;
+  submitServiceRequest: (requestData: Omit<ServiceRequest, 'id' | 'referenceNumber' | 'createdAt' | 'status'>) => Promise<ServiceRequest>;
+  convertRequestToProject: (requestId: string, workerId: string, priority: 'Low' | 'Medium' | 'High' | 'Urgent', observations: string, tasks: string[]) => Promise<Project>;
   toggleTaskCompletion: (projectId: string, taskId: string) => void;
   uploadPhotoEvidence: (projectId: string, category: PhotoCategory, description: string, url: string) => void;
   addTimelineEvent: (projectId: string, title: string, description: string, photoUrl?: string) => void;
@@ -25,9 +36,10 @@ interface AppContextType {
   markNotificationRead: (notificationId: string) => void;
   
   // Worker Management Actions
-  addWorker: (workerData: Omit<WorkerInfo, 'id' | 'status'>) => WorkerInfo;
-  removeWorker: (workerId: string) => void;
+  addWorker: (workerData: Omit<WorkerInfo, 'id' | 'status'>) => Promise<WorkerInfo>;
+  removeWorker: (workerId: string) => Promise<void>;
 
+  refreshData: () => Promise<void>;
   resetDemoData: () => void;
 }
 
@@ -41,25 +53,71 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [workers, setWorkers] = useState<WorkerInfo[]>(INITIAL_WORKERS);
   const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
   const [selectedProjectId, setSelectedProjectId] = useState<string>('proj-501');
+  const [isLoadingApi, setIsLoadingApi] = useState<boolean>(true);
 
-  // Submit service request
-  const submitServiceRequest = (requestData: Omit<ServiceRequest, 'id' | 'referenceNumber' | 'createdAt' | 'status'>) => {
-    const refNum = `REQ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const newReq: ServiceRequest = {
-      ...requestData,
-      id: `req-${Date.now()}`,
-      referenceNumber: refNum,
-      status: 'Awaiting Review',
-      createdAt: new Date().toISOString()
-    };
-    
+  // Fetch initial live data from backend REST API
+  const refreshData = async () => {
+    setIsLoadingApi(true);
+    try {
+      const [propsData, reqsData, projsData, wrksData] = await Promise.allSettled([
+        fetchPropertiesFromApi(),
+        fetchRequestsFromApi(),
+        fetchProjectsFromApi(),
+        fetchWorkersFromApi()
+      ]);
+
+      if (propsData.status === 'fulfilled' && propsData.value.length > 0) setProperties(propsData.value);
+      if (reqsData.status === 'fulfilled' && reqsData.value.length > 0) setRequests(reqsData.value);
+      if (projsData.status === 'fulfilled' && projsData.value.length > 0) {
+        setProjects(projsData.value);
+        setSelectedProjectId(projsData.value[0].id);
+      }
+      if (wrksData.status === 'fulfilled' && wrksData.value.length > 0) setWorkers(wrksData.value);
+    } catch (err) {
+      console.warn('Backend API offline or unreachable, using local fallback data:', err);
+    } finally {
+      setIsLoadingApi(false);
+    }
+  };
+
+  useEffect(() => {
+    refreshData();
+  }, []);
+
+  // Submit service request connected to API
+  const submitServiceRequest = async (requestData: Omit<ServiceRequest, 'id' | 'referenceNumber' | 'createdAt' | 'status'>): Promise<ServiceRequest> => {
+    let newReq: ServiceRequest;
+    try {
+      newReq = await createRequestApi({
+        propertyId: requestData.propertyId,
+        propertyName: requestData.propertyName,
+        propertyAddress: requestData.propertyAddress,
+        clientName: requestData.clientName,
+        serviceCategory: requestData.serviceCategory,
+        description: requestData.description,
+        preferredDate: requestData.preferredDate,
+        additionalNotes: requestData.additionalNotes,
+        photoUrls: requestData.photoUrls
+      });
+    } catch (err) {
+      console.warn('API request failed, submitting locally:', err);
+      const refNum = `REQ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      newReq = {
+        ...requestData,
+        id: `req-${Date.now()}`,
+        referenceNumber: refNum,
+        status: 'Awaiting Review',
+        createdAt: new Date().toISOString()
+      };
+    }
+
     setRequests(prev => [newReq, ...prev]);
 
     // Push notification to Admin
     const newNotif: AppNotification = {
       id: `notif-${Date.now()}`,
       title: 'New Service Request Submitted',
-      message: `${requestData.clientName} requested ${requestData.serviceCategory} for ${requestData.propertyName} (${refNum}).`,
+      message: `${requestData.clientName} requested ${requestData.serviceCategory} for ${requestData.propertyName} (${newReq.referenceNumber}).`,
       timestamp: 'Just now',
       isRead: false,
       roleTarget: 'admin'
@@ -69,104 +127,112 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newReq;
   };
 
-  // Convert request to project
-  const convertRequestToProject = (
+  // Convert request to project connected to API
+  const convertRequestToProject = async (
     requestId: string,
     workerId: string,
     priority: 'Low' | 'Medium' | 'High' | 'Urgent',
     observations: string,
     taskList: string[]
-  ) => {
+  ): Promise<Project> => {
+    let newProject: Project;
     const targetReq = requests.find(r => r.id === requestId);
     const worker = workers.find(w => w.id === workerId);
-    if (!targetReq) throw new Error("Request not found");
 
-    // Update request status
-    setRequests(prev => prev.map(r => r.id === requestId ? { ...r, status: 'Approved' } : r));
+    try {
+      newProject = await triageProjectApi({
+        requestId,
+        workerId,
+        priority,
+        adminObservations: observations,
+        tasks: taskList
+      });
+    } catch (err) {
+      console.warn('Triage API call failed, creating project locally:', err);
+      if (!targetReq) throw new Error("Request not found");
 
-    const projRef = `PRJ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const newProjId = `proj-${Date.now()}`;
+      const projRef = `PRJ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const newProjId = `proj-${Date.now()}`;
+      const newTasks = taskList.map((t, idx) => ({
+        id: `task-${Date.now()}-${idx}`,
+        title: t,
+        isCompleted: false
+      }));
 
-    const newTasks = taskList.map((t, idx) => ({
-      id: `task-${Date.now()}-${idx}`,
-      title: t,
-      isCompleted: false
-    }));
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-    const newProject: Project = {
-      id: newProjId,
-      title: `${targetReq.propertyName} — ${targetReq.serviceCategory} Maintenance`,
-      referenceNumber: projRef,
-      propertyId: targetReq.propertyId,
-      propertyName: targetReq.propertyName,
-      propertyAddress: targetReq.propertyAddress,
-      clientName: targetReq.clientName,
-      serviceCategory: targetReq.serviceCategory,
-      status: 'Scheduled',
-      priority,
-      workerId: worker?.id,
-      workerName: worker?.name,
-      workerPhone: worker?.phone,
-      workerAvatar: worker?.avatarUrl,
-      clientRequestSummary: targetReq.description,
-      adminObservations: observations,
-      scheduledDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-      expectedCompletionDate: new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0],
-      latitude: 43.6702,
-      longitude: -79.3897,
-      tasks: newTasks,
-      photos: targetReq.photoUrls.map((url, i) => ({
-        id: `photo-req-${i}`,
-        url,
-        category: 'Before',
-        description: 'Client submitted request photo.',
-        uploadedBy: targetReq.clientName,
-        timestamp: `${formattedDate} — ${formattedTime}`
-      })),
-      timeline: [
-        {
-          id: `t-req-${Date.now()}`,
-          date: formattedDate,
-          time: formattedTime,
-          title: 'Service Request Submitted',
-          description: targetReq.description,
-          authorName: targetReq.clientName,
-          authorRole: 'Client',
-          iconType: 'request'
-        },
-        {
-          id: `t-proj-${Date.now()}`,
-          date: formattedDate,
-          time: formattedTime,
-          title: 'Project Created & Assigned',
-          description: `Converted to project (${projRef}). Assigned to ${worker?.name || 'Technician'}.`,
-          authorName: 'ApexCare Admin',
-          authorRole: 'Company Admin',
-          iconType: 'project'
-        }
-      ]
-    };
-
-    setProjects(prev => [newProject, ...prev]);
-    setSelectedProjectId(newProjId);
-
-    // Update worker status
-    if (worker) {
-      setWorkers(prev => prev.map(w => w.id === worker.id ? { ...w, status: 'On Job', activeJobId: newProjId } : w));
+      newProject = {
+        id: newProjId,
+        title: `${targetReq.propertyName} — ${targetReq.serviceCategory} Maintenance`,
+        referenceNumber: projRef,
+        propertyId: targetReq.propertyId,
+        propertyName: targetReq.propertyName,
+        propertyAddress: targetReq.propertyAddress,
+        clientName: targetReq.clientName,
+        serviceCategory: targetReq.serviceCategory,
+        status: 'Scheduled',
+        priority,
+        workerId: worker?.id,
+        workerName: worker?.name,
+        workerPhone: worker?.phone,
+        workerAvatar: worker?.avatarUrl,
+        clientRequestSummary: targetReq.description,
+        adminObservations: observations,
+        scheduledDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+        expectedCompletionDate: new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0],
+        latitude: 43.6702,
+        longitude: -79.3897,
+        tasks: newTasks,
+        photos: targetReq.photoUrls.map((url, i) => ({
+          id: `photo-req-${i}`,
+          url,
+          category: 'Before',
+          description: 'Client submitted request photo.',
+          uploadedBy: targetReq.clientName,
+          timestamp: `${formattedDate} — ${formattedTime}`
+        })),
+        timeline: [
+          {
+            id: `t-req-${Date.now()}`,
+            date: formattedDate,
+            time: formattedTime,
+            title: 'Service Request Submitted',
+            description: targetReq.description,
+            authorName: targetReq.clientName,
+            authorRole: 'Client',
+            iconType: 'request'
+          },
+          {
+            id: `t-proj-${Date.now()}`,
+            date: formattedDate,
+            time: formattedTime,
+            title: 'Project Created & Assigned',
+            description: `Converted to project (${projRef}). Assigned to ${worker?.name || 'Technician'}.`,
+            authorName: 'ApexCare Admin',
+            authorRole: 'Company Admin',
+            iconType: 'project'
+          }
+        ]
+      };
     }
 
-    // Notify Client
+    setRequests(prev => prev.map(r => r.id === requestId ? { ...r, status: 'Approved' } : r));
+    setProjects(prev => [newProject, ...prev]);
+    setSelectedProjectId(newProject.id);
+
+    if (worker) {
+      setWorkers(prev => prev.map(w => w.id === worker.id ? { ...w, status: 'On Job', activeJobId: newProject.id } : w));
+    }
+
     const clientNotif: AppNotification = {
       id: `notif-${Date.now()}-c`,
       title: 'Project Scheduled',
-      message: `Your request (${targetReq.referenceNumber}) has been approved and assigned to ${worker?.name}.`,
+      message: `Your request has been approved and assigned to ${worker?.name || 'Technician'}.`,
       timestamp: 'Just now',
       isRead: false,
-      projectId: newProjId,
+      projectId: newProject.id,
       roleTarget: 'client'
     };
     setNotifications(prev => [clientNotif, ...prev]);
@@ -174,7 +240,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newProject;
   };
 
-  // Toggle task completion percentage
   const toggleTaskCompletion = (projectId: string, taskId: string) => {
     setProjects(prev => prev.map(proj => {
       if (proj.id !== projectId) return proj;
@@ -202,7 +267,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }));
   };
 
-  // Upload photo evidence
   const uploadPhotoEvidence = (projectId: string, category: PhotoCategory, description: string, url: string) => {
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -233,7 +297,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
-  // Add timeline entry
   const addTimelineEvent = (projectId: string, title: string, description: string, photoUrl?: string) => {
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -271,7 +334,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setNotifications(prev => [notif, ...prev]);
   };
 
-  // Update status
   const updateProjectStatus = (projectId: string, newStatus: Project['status']) => {
     setProjects(prev => prev.map(proj => {
       if (proj.id !== projectId) return proj;
@@ -314,20 +376,38 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setNotifications(prev => prev.map(n => n.id === notificationId ? { ...n, isRead: true } : n));
   };
 
-  // Worker Management Actions (Admin)
-  const addWorker = (workerData: Omit<WorkerInfo, 'id' | 'status'>) => {
-    const newWorker: WorkerInfo = {
-      ...workerData,
-      id: `worker-${Date.now()}`,
-      status: 'Available'
-    };
+  // Worker Management Actions connected to API
+  const addWorker = async (workerData: Omit<WorkerInfo, 'id' | 'status'>): Promise<WorkerInfo> => {
+    let newWorker: WorkerInfo;
+    try {
+      newWorker = await addWorkerApi({
+        name: workerData.name,
+        roleTitle: workerData.roleTitle,
+        phone: workerData.phone,
+        email: workerData.email,
+        avatarUrl: workerData.avatarUrl
+      });
+    } catch (err) {
+      console.warn('API addWorker failed, adding locally:', err);
+      newWorker = {
+        ...workerData,
+        id: `worker-${Date.now()}`,
+        status: 'Available'
+      };
+    }
+
     setWorkers(prev => [...prev, newWorker]);
     return newWorker;
   };
 
-  const removeWorker = (workerId: string) => {
+  const removeWorker = async (workerId: string): Promise<void> => {
+    try {
+      await removeWorkerApi(workerId);
+    } catch (err) {
+      console.warn('API removeWorker failed, removing locally:', err);
+    }
+
     setWorkers(prev => prev.filter(w => w.id !== workerId));
-    // Unassign worker from active projects if removed
     setProjects(prev => prev.map(p => p.workerId === workerId ? { ...p, workerId: undefined, workerName: 'Unassigned' } : p));
   };
 
@@ -351,6 +431,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       notifications,
       selectedProjectId,
       setSelectedProjectId,
+      isLoadingApi,
       submitServiceRequest,
       convertRequestToProject,
       toggleTaskCompletion,
@@ -360,6 +441,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       markNotificationRead,
       addWorker,
       removeWorker,
+      refreshData,
       resetDemoData
     }}>
       {children}

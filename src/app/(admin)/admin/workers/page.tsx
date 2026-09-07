@@ -14,11 +14,11 @@ export default function AdminWorkersPage() {
   const [email, setEmail] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('/assets/worker_avatar_1786614986847.jpg');
 
-  const handleAddSubmit = (e: React.FormEvent) => {
+  const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    addWorker({
+    await addWorker({
       name,
       roleTitle,
       phone,

@@ -15,11 +15,11 @@ export default function ClientRequestServicePage() {
   const [reqNotes, setReqNotes] = useState<string>('');
   const [reqSubmittedRef, setReqSubmittedRef] = useState<string | null>(null);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const prop = properties.find(p => p.id === reqPropertyId) || properties[0];
 
-    const newReq = submitServiceRequest({
+    const newReq = await submitServiceRequest({
       propertyId: prop.id,
       propertyName: prop.name,
       propertyAddress: reqAddress || prop.address,
