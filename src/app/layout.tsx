@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   title: `${BRAND_CONFIG.companyName} — Professional Property Care Platform`,
   description: `${BRAND_CONFIG.tagline} ${BRAND_CONFIG.subTagline}`,
   keywords: ['property maintenance', 'home repair', 'property management', 'toronto property care', 'technician portal'],
-  authors: [{ name: BRAND_CONFIG.companyName }]
+  authors: [{ name: BRAND_CONFIG.companyName }],
+  icons: { icon: '/favicon.ico' }
 };
 
 export const viewport: Viewport = {
