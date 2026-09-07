@@ -59,7 +59,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
     uploadPhotoEvidence(
       activeJob.id,
       photoCategory,
-      photoDescription || `${photoCategory} evidence uploaded by ${worker.name}`,
+      photoDescription || `${photoCategory} evidence uploaded by ${worker?.name || 'Technician'}`,
       photoUrl
     );
     setPhotoDescription('');
@@ -71,8 +71,8 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
     if (!observationText.trim()) return;
     addTimelineEvent(
       activeJob.id,
-      'Technician Site Observation',
-      observationText.trim()
+      'Field Observation Added',
+      `${observationText} — (Logged by ${worker?.name || 'Technician'})`
     );
     setObservationText('');
     setShowObservationModal(false);

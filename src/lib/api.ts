@@ -3,10 +3,15 @@ import { Property, ServiceRequest, Project, WorkerInfo } from '../types';
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://building-management-backend-0v3l.onrender.com/api/v1';
 
 export async function fetchPropertiesFromApi(): Promise<Property[]> {
-  const res = await fetch(`${API_BASE}/properties`, { cache: 'no-store' });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message || 'Failed to fetch properties');
-  return json.data;
+  try {
+    const res = await fetch(`${API_BASE}/properties`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Properties API error:', err);
+    return [];
+  }
 }
 
 export async function loginWithApi(email: string, password?: string): Promise<{
@@ -28,10 +33,15 @@ export async function loginWithApi(email: string, password?: string): Promise<{
 }
 
 export async function fetchRequestsFromApi(): Promise<ServiceRequest[]> {
-  const res = await fetch(`${API_BASE}/requests`, { cache: 'no-store' });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message || 'Failed to fetch requests');
-  return json.data;
+  try {
+    const res = await fetch(`${API_BASE}/requests`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Requests API error:', err);
+    return [];
+  }
 }
 
 export async function createRequestApi(requestData: {
@@ -56,10 +66,15 @@ export async function createRequestApi(requestData: {
 }
 
 export async function fetchProjectsFromApi(): Promise<Project[]> {
-  const res = await fetch(`${API_BASE}/projects`, { cache: 'no-store' });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message || 'Failed to fetch projects');
-  return json.data;
+  try {
+    const res = await fetch(`${API_BASE}/projects`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Projects API error:', err);
+    return [];
+  }
 }
 
 export async function fetchProjectByIdApi(id: string): Promise<Project> {
@@ -87,10 +102,15 @@ export async function triageProjectApi(data: {
 }
 
 export async function fetchWorkersFromApi(): Promise<WorkerInfo[]> {
-  const res = await fetch(`${API_BASE}/workers`, { cache: 'no-store' });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message || 'Failed to fetch workers');
-  return json.data;
+  try {
+    const res = await fetch(`${API_BASE}/workers`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Workers API error:', err);
+    return [];
+  }
 }
 
 export async function addWorkerApi(workerData: {
