@@ -1,3 +1,5 @@
+declare module '*.css';
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppProvider } from '../context/AppContext';
@@ -23,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen">
+      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen relative">
         <AppProvider>
           {children}
         </AppProvider>

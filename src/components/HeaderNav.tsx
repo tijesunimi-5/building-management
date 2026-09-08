@@ -9,7 +9,7 @@ export const HeaderNav: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 w-full overflow-x-hidden">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
         {/* Brand Logo */}
@@ -95,7 +95,8 @@ export const HeaderNav: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-xl bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors"
+                  className="p-2.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition-colors"
+                  aria-label="Close Mobile Menu"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -139,7 +140,7 @@ export const HeaderNav: React.FC = () => {
               <Link
                 href="/client/request"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-extrabold text-white bg-sky-600 hover:bg-sky-700 shadow-md transition-all"
+                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-extrabold text-white bg-sky-600 hover:bg-sky-700 active:bg-sky-800 shadow-md transition-all"
               >
                 <span>Request a Service</span>
                 <ArrowRight className="w-4 h-4" />
@@ -148,7 +149,7 @@ export const HeaderNav: React.FC = () => {
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all"
+                className="w-full min-h-[48px] flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 transition-all"
               >
                 <LogIn className="w-4 h-4 text-slate-500" />
                 <span>Client & Staff Login</span>
