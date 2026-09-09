@@ -1,6 +1,7 @@
 import { Property, ServiceRequest, Project, WorkerInfo } from '../types';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://building-management-backend-0v3l.onrender.com/api/v1';
+const rawBase = process.env.NEXT_PUBLIC_API_URL || 'https://building-management-backend-0v3l.onrender.com/api/v1';
+const API_BASE = rawBase.endsWith('/api/v1') ? rawBase : `${rawBase.replace(/\/$/, '')}/api/v1`;
 
 export async function fetchPropertiesFromApi(): Promise<Property[]> {
   try {
