@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { RoleType, Property, ServiceRequest, Project, WorkerInfo, AppNotification, PhotoCategory } from '../types';
+import { RoleType, Property, ServiceRequest, Project, WorkerInfo, AppNotification, PhotoCategory, UserProfile } from '../types';
 import { INITIAL_PROPERTIES, INITIAL_REQUESTS, INITIAL_PROJECTS, INITIAL_WORKERS, INITIAL_NOTIFICATIONS } from '../data/mockData';
 import {
   fetchPropertiesFromApi,
@@ -14,9 +14,24 @@ import {
   removeWorkerApi
 } from '../lib/api';
 
+const DEFAULT_CLIENT_USER: UserProfile = {
+  id: 'user-client-1',
+  name: 'Client User',
+  email: 'client@example.ca',
+  phone: '+1 (416) 555-0192',
+  role: 'client',
+  roleTitle: 'Homeowner / Client',
+  primaryAddress: '142 Yorkville Avenue, Toronto, ON',
+  emergencyContact: '',
+  preferredContactMethod: 'Email'
+};
+
 interface AppContextType {
   currentRole: RoleType;
   setCurrentRole: (role: RoleType) => void;
+  currentUser: UserProfile | null;
+  setCurrentUser: (user: UserProfile | null) => void;
+  updateUserProfile: (updates: Partial<UserProfile>) => void;
   properties: Property[];
   requests: ServiceRequest[];
   projects: Project[];
@@ -47,6 +62,46 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentRole, setCurrentRole] = useState<RoleType>('public');
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(DEFAULT_CLIENT_USER);
+
+  // Load persisted user profile from localStorage if available
+  useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem('apexcare_current_user');
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        setCurrentUser(parsed);
+        if (parsed.role) setCurrentRole(parsed.role);
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, []);
+
+  const updateUserProfile = (updates: Partial<UserProfile>) => {
+    setCurrentUser(prev => {
+      const updated = prev ? { ...prev, ...updates } : { ...DEFAULT_CLIENT_USER, ...updates };
+      try {
+        localStorage.setItem('apexcare_current_user', JSON.stringify(updated));
+      } catch {
+        // Ignore localStorage error
+      }
+      return updated;
+    });
+  };
+
+  const handleSetCurrentUser = (user: UserProfile | null) => {
+    setCurrentUser(user);
+    try {
+      if (user) {
+        localStorage.setItem('apexcare_current_user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('apexcare_current_user');
+      }
+    } catch {
+      // Ignore
+    }
+  };
   const [properties, setProperties] = useState<Property[]>([]);
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -424,6 +479,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     <AppContext.Provider value={{
       currentRole,
       setCurrentRole,
+      currentUser,
+      setCurrentUser: handleSetCurrentUser,
+      updateUserProfile,
       properties,
       requests,
       projects,

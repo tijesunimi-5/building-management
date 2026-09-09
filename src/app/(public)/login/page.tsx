@@ -9,7 +9,7 @@ import { Mail, ArrowRight, Wrench, AlertCircle, ShieldCheck } from 'lucide-react
 
 export default function PublicLoginPage() {
   const router = useRouter();
-  const { setCurrentRole } = useApp();
+  const { setCurrentRole, setCurrentUser } = useApp();
 
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,6 +30,14 @@ export default function PublicLoginPage() {
       }
 
       setCurrentRole(userData.role);
+      setCurrentUser({
+        id: userData.id,
+        name: userData.name || email.split('@')[0],
+        email: userData.email,
+        role: userData.role,
+        roleTitle: userData.roleTitle || (userData.role === 'worker' ? 'Technician' : 'Client'),
+        avatarUrl: userData.avatarUrl
+      });
       if (userData.role === 'worker') {
         router.push('/worker');
       } else {

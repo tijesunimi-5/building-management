@@ -1,5 +1,18 @@
 export type RoleType = 'public' | 'client' | 'admin' | 'worker';
 
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: RoleType;
+  roleTitle?: string;
+  avatarUrl?: string;
+  primaryAddress?: string;
+  emergencyContact?: string;
+  preferredContactMethod?: 'Email' | 'Phone' | 'SMS';
+}
+
 export type PropertyType = 'Single Family Home' | 'Townhouse' | 'Condo / Apartment' | 'Commercial Property';
 
 export type RequestStatus = 'Awaiting Review' | 'Under Review' | 'Approved' | 'Declined' | 'Completed';
