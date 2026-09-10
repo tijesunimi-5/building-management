@@ -49,6 +49,7 @@ export interface ServiceRequest {
   serviceCategory: string;
   description: string;
   preferredDate: string;
+  urgency?: PriorityLevel;
   additionalNotes?: string;
   photoUrls: string[];
   status: RequestStatus;

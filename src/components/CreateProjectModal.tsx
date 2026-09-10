@@ -14,7 +14,9 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
   const { workers, convertRequestToProject } = useApp();
   
   const [selectedWorkerId, setSelectedWorkerId] = useState<string>(workers[0]?.id || '');
-  const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Urgent'>('Medium');
+  const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Urgent'>(
+    request?.urgency || 'Medium'
+  );
   const [adminObservations, setAdminObservations] = useState<string>(
     request ? `${request.serviceCategory} cartridge/hardware requires inspection and possible replacement.` : ''
   );
@@ -87,9 +89,20 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
               <span className="text-slate-500 font-medium">Property:</span>
               <span className="font-bold text-slate-900">{request.propertyName} ({request.propertyAddress})</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-slate-500 font-medium">Requested Service:</span>
               <span className="font-bold text-sky-600">{request.serviceCategory}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 font-medium">Client Urgency Flag:</span>
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${
+                request.urgency === 'Urgent' ? 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse' :
+                request.urgency === 'High' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                request.urgency === 'Low' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                'bg-sky-50 text-sky-700 border-sky-200'
+              }`}>
+                {request.urgency || 'Medium'}
+              </span>
             </div>
             <div>
               <span className="text-slate-500 font-medium block mb-1">Client Description:</span>

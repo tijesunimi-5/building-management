@@ -1,19 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
 import { loginWithApi } from '../../../lib/api';
 import { BRAND_CONFIG } from '../../../utils/brandConfig';
-import { Mail, ArrowRight, Wrench, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Mail, ArrowRight, Wrench, AlertCircle, ShieldCheck, CheckCircle2, UserCheck } from 'lucide-react';
 
 export default function PublicLoginPage() {
   const router = useRouter();
-  const { setCurrentRole, setCurrentUser } = useApp();
+  const { currentRole, currentUser, setCurrentRole, setCurrentUser } = useApp();
 
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [persistedUserEmail, setPersistedUserEmail] = useState<string | null>(null);
+
+  // Auto-fill and check for persistent login
+  useEffect(() => {
+    try {
+      const savedEmail = localStorage.getItem('apexcare_last_email');
+      if (savedEmail) {
+        setEmail(savedEmail);
+        setPersistedUserEmail(savedEmail);
+      }
+      if (currentUser && currentUser.email) {
+        setPersistedUserEmail(currentUser.email);
+      }
+    } catch {
+      // Ignore
+    }
+  }, [currentUser]);
 
   const handleClientLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +46,25 @@ export default function PublicLoginPage() {
         return;
       }
 
-      setCurrentRole(userData.role);
-      setCurrentUser({
+      // Save email and user profile to localStorage for persistent PWA access
+      try {
+        localStorage.setItem('apexcare_last_email', userData.email);
+      } catch {
+        // Ignore
+      }
+
+      const userProfile = {
         id: userData.id,
         name: userData.name || email.split('@')[0],
         email: userData.email,
         role: userData.role,
         roleTitle: userData.roleTitle || (userData.role === 'worker' ? 'Technician' : 'Client'),
         avatarUrl: userData.avatarUrl
-      });
+      };
+
+      setCurrentRole(userData.role);
+      setCurrentUser(userProfile);
+
       if (userData.role === 'worker') {
         router.push('/worker');
       } else {
@@ -47,6 +74,14 @@ export default function PublicLoginPage() {
       setErrorMessage((err as Error).message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleQuickResume = () => {
+    if (currentUser?.role === 'worker') {
+      router.push('/worker');
+    } else {
+      router.push('/client');
     }
   };
 
@@ -63,9 +98,33 @@ export default function PublicLoginPage() {
             Sign In to {BRAND_CONFIG.shortName}
           </h1>
           <p className="text-xs text-slate-600">
-            Hassle-free homeowner & client access. Enter your email to sign in or get started.
+            Secure homeowner & client access. Enter your email to sign in or get started.
           </p>
         </div>
+
+        {/* Quick Resume Active Session Card */}
+        {persistedUserEmail && (
+          <div className="p-4 bg-sky-50 border border-sky-200 rounded-2xl space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-sky-600 text-white">
+                <UserCheck className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-sky-900 block">Saved Session Found</span>
+                <span className="text-[11px] text-sky-700 font-medium">{persistedUserEmail}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleQuickResume}
+              className="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5"
+            >
+              <span>Continue as {persistedUserEmail.split('@')[0]}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
 
         {/* Error Alert */}
         {errorMessage && (
@@ -89,7 +148,7 @@ export default function PublicLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
@@ -97,9 +156,9 @@ export default function PublicLoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white font-extrabold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
           >
-            <span>{isLoading ? 'Connecting...' : 'Sign In / Register with Email'}</span>
+            <span>{isLoading ? 'Authenticating...' : 'Sign In / Register with Email'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

@@ -42,6 +42,7 @@ export default function AdminRequestsPage() {
                 <th className="px-6 py-3.5">Ref Code</th>
                 <th className="px-6 py-3.5">Client & Property</th>
                 <th className="px-6 py-3.5">Service Category</th>
+                <th className="px-6 py-3.5">Urgency</th>
                 <th className="px-6 py-3.5">Submitted Date</th>
                 <th className="px-6 py-3.5">Status</th>
                 <th className="px-6 py-3.5 text-right">Actions</th>
@@ -59,6 +60,16 @@ export default function AdminRequestsPage() {
                   </td>
                   <td className="px-6 py-4 font-medium text-slate-800">
                     {req.serviceCategory}
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                      req.urgency === 'Urgent' ? 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse' :
+                      req.urgency === 'High' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                      req.urgency === 'Low' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                      'bg-sky-50 text-sky-700 border-sky-200'
+                    }`}>
+                      {req.urgency || 'Medium'}
+                    </span>
                   </td>
                   <td className="px-6 py-4 text-slate-500">
                     {new Date(req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}

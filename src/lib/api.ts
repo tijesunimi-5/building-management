@@ -53,6 +53,7 @@ export async function createRequestApi(requestData: {
   serviceCategory: string;
   description: string;
   preferredDate?: string;
+  urgency?: string;
   additionalNotes?: string;
   photoUrls?: string[];
 }): Promise<ServiceRequest> {

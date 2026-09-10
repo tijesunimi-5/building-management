@@ -151,6 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         serviceCategory: requestData.serviceCategory,
         description: requestData.description,
         preferredDate: requestData.preferredDate,
+        urgency: requestData.urgency,
         additionalNotes: requestData.additionalNotes,
         photoUrls: requestData.photoUrls
       });
