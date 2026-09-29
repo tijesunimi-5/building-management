@@ -26,18 +26,13 @@ export const HeaderNav: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[64px] sm:h-20 py-2 sm:py-0 flex items-center justify-between gap-2">
           
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group">
+          <Link href="/" className="flex items-center flex-shrink-0 group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={BRAND_CONFIG.logoTransparent}
               alt={BRAND_CONFIG.shortName}
-              className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-11 sm:h-14 md:h-16 max-h-16 w-auto object-contain transition-transform group-hover:scale-105"
             />
-            <div className="hidden sm:block">
-              <span className="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest block leading-none">
-                Property Management
-              </span>
-            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -112,7 +107,7 @@ export const HeaderNav: React.FC = () => {
                   <img
                     src={BRAND_CONFIG.logoTransparent}
                     alt={BRAND_CONFIG.shortName}
-                    className="h-9 w-auto object-contain"
+                    className="h-12 w-auto object-contain"
                   />
                 </Link>
 

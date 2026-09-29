@@ -48,7 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="md:hidden bg-slate-900 text-white px-4 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between sticky top-0 z-40 shadow-md">
         <Link href="/admin" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-7 w-auto object-contain" />
+          <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-9 w-auto object-contain" />
           <span className="text-xs text-amber-400 font-semibold bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-800/40">Admin Console</span>
         </Link>
 
@@ -87,7 +87,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <div className="flex items-center justify-between pb-6 border-b border-slate-800">
                 <Link href="/admin" className="flex items-center gap-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-7 w-auto object-contain" />
+                  <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-10 w-auto object-contain" />
                   <span className="text-[11px] text-amber-400 font-semibold bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-800/40">Admin Console</span>
                 </Link>
 
@@ -153,7 +153,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center justify-between pb-6 border-b border-slate-800">
             <Link href="/" className="flex flex-col gap-1.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-8 w-auto object-contain self-start" />
+              <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-11 w-auto object-contain self-start" />
               <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-wider bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-800/40 w-max">Admin Console</span>
             </Link>
             <button
