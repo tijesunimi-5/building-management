@@ -16,7 +16,7 @@ export default function AdminRequestsPage() {
       
       <div>
         <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-          <Inbox className="w-6 h-6 text-sky-600" />
+          <Inbox className="w-6 h-6 text-emerald-600" />
           <span>Service Requests Triage</span>
         </h1>
         <p className="text-sm text-slate-600">Review homeowner submissions, inspect photos, add technical observations, and assign field technicians.</p>
@@ -30,7 +30,7 @@ export default function AdminRequestsPage() {
             <input
               type="text"
               placeholder="Search reference or client..."
-              className="pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none w-64"
+              className="pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none w-64"
             />
           </div>
         </div>
@@ -42,6 +42,7 @@ export default function AdminRequestsPage() {
                 <th className="px-6 py-3.5">Ref Code</th>
                 <th className="px-6 py-3.5">Client & Property</th>
                 <th className="px-6 py-3.5">Service Category</th>
+                <th className="px-6 py-3.5">Urgency</th>
                 <th className="px-6 py-3.5">Submitted Date</th>
                 <th className="px-6 py-3.5">Status</th>
                 <th className="px-6 py-3.5 text-right">Actions</th>
@@ -50,7 +51,7 @@ export default function AdminRequestsPage() {
             <tbody className="divide-y divide-slate-200 bg-white">
               {requests.map(req => (
                 <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="px-6 py-4 font-mono font-bold text-sky-600">
+                  <td className="px-6 py-4 font-mono font-bold text-emerald-600">
                     {req.referenceNumber}
                   </td>
                   <td className="px-6 py-4">
@@ -59,6 +60,16 @@ export default function AdminRequestsPage() {
                   </td>
                   <td className="px-6 py-4 font-medium text-slate-800">
                     {req.serviceCategory}
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                      req.urgency === 'Urgent' ? 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse' :
+                      req.urgency === 'High' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                      req.urgency === 'Low' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                      'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    }`}>
+                      {req.urgency || 'Medium'}
+                    </span>
                   </td>
                   <td className="px-6 py-4 text-slate-500">
                     {new Date(req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -88,7 +99,7 @@ export default function AdminRequestsPage() {
                     ) : (
                       <button
                         onClick={() => setSelectedTriageReq(req)}
-                        className="px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold shadow-2xs transition-colors"
+                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-2xs transition-colors"
                       >
                         Convert to Project
                       </button>

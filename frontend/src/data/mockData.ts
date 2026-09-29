@@ -87,7 +87,7 @@ export const INITIAL_WORKERS: WorkerInfo[] = [
     name: 'Michael Carter',
     roleTitle: 'Senior Plumbing Technician',
     phone: '+1 (416) 555-0199',
-    email: 'm.carter@apexcare-demo.ca',
+    email: 'm.carter@ojutu-demo.ca',
     avatarUrl: '/assets/worker_avatar_1786614986847.jpg',
     status: 'On Job',
     activeJobId: 'proj-501'
@@ -97,7 +97,7 @@ export const INITIAL_WORKERS: WorkerInfo[] = [
     name: 'Daniel Wilson',
     roleTitle: 'Electrical & HVAC Specialist',
     phone: '+1 (416) 555-0188',
-    email: 'd.wilson@apexcare-demo.ca',
+    email: 'd.wilson@ojutu-demo.ca',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     status: 'Available'
   },
@@ -106,7 +106,7 @@ export const INITIAL_WORKERS: WorkerInfo[] = [
     name: 'James Brown',
     roleTitle: 'General Repairs & Carpentry',
     phone: '+1 (416) 555-0144',
-    email: 'j.brown@apexcare-demo.ca',
+    email: 'j.brown@ojutu-demo.ca',
     avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
     status: 'Available'
   }
@@ -186,7 +186,7 @@ export const INITIAL_PROJECTS: Project[] = [
         time: '10:15 AM',
         title: 'Project Created & Reviewed',
         description: 'Service request reviewed by dispatch and converted into an active maintenance project.',
-        authorName: 'ApexCare Dispatch',
+        authorName: 'Ojutu Dispatch',
         authorRole: 'Company Admin',
         iconType: 'project'
       },
@@ -196,7 +196,7 @@ export const INITIAL_PROJECTS: Project[] = [
         time: '08:30 AM',
         title: 'Worker Assigned',
         description: 'Senior Technician Michael Carter assigned to lead property repairs.',
-        authorName: 'ApexCare Admin',
+        authorName: 'Ojutu Admin',
         authorRole: 'Company Admin',
         iconType: 'worker'
       },

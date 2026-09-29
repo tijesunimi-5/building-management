@@ -47,7 +47,7 @@ export default function AdminOverviewPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/requests"
-            className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
             <span>Triage Incoming Requests</span>
@@ -63,7 +63,7 @@ export default function AdminOverviewPage() {
             <span className="text-3xl font-extrabold text-slate-900 block mt-1">{activeProjectsCount}</span>
             <span className="text-[11px] text-emerald-600 font-semibold mt-1 inline-block">In Field Progress</span>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <Briefcase className="w-6 h-6" />
           </div>
         </div>
@@ -117,7 +117,7 @@ export default function AdminOverviewPage() {
               <input
                 type="text"
                 placeholder="Search request or client..."
-                className="pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none w-48 sm:w-64"
+                className="pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none w-48 sm:w-64"
               />
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function AdminOverviewPage() {
             <tbody className="divide-y divide-slate-200 bg-white">
               {requests.map(req => (
                 <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="px-6 py-4 font-mono font-bold text-sky-600">
+                  <td className="px-6 py-4 font-mono font-bold text-emerald-600">
                     {req.referenceNumber}
                   </td>
                   <td className="px-6 py-4">
@@ -176,7 +176,7 @@ export default function AdminOverviewPage() {
                     ) : (
                       <button
                         onClick={() => setSelectedTriageReq(req)}
-                        className="px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold shadow-2xs transition-colors"
+                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-2xs transition-colors"
                       >
                         Convert to Project
                       </button>
@@ -194,7 +194,7 @@ export default function AdminOverviewPage() {
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200 pb-3">
           <h3 className="text-lg font-bold text-slate-900">Technician & Worker Roster</h3>
-          <Link href="/admin/workers" className="text-xs font-bold text-sky-600 hover:underline">
+          <Link href="/admin/workers" className="text-xs font-bold text-emerald-600 hover:underline">
             Manage Workers ({workers.length}) →
           </Link>
         </div>

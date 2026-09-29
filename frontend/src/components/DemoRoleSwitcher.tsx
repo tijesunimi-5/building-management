@@ -51,7 +51,7 @@ export const DemoRoleSwitcher: React.FC<DemoRoleSwitcherProps> = ({ onOpenNotifi
                   onClick={() => setCurrentRole(r.id)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-all duration-150 ${
                     isActive
-                      ? 'bg-sky-600 text-white shadow-sm'
+                      ? 'bg-emerald-600 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
                   }`}
                   title={`Switch to ${r.label}`}
@@ -71,7 +71,7 @@ export const DemoRoleSwitcher: React.FC<DemoRoleSwitcherProps> = ({ onOpenNotifi
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-sky-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-slate-900">
+              <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-slate-900">
                 {unreadCount}
               </span>
             )}

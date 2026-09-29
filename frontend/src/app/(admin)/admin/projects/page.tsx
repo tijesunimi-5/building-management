@@ -13,7 +13,7 @@ export default function AdminProjectsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-            <Briefcase className="w-6 h-6 text-sky-600" />
+            <Briefcase className="w-6 h-6 text-emerald-600" />
             <span>Projects Management Hub</span>
           </h1>
           <p className="text-sm text-slate-600">Active and completed property maintenance projects across all registered client homes.</p>
@@ -29,11 +29,11 @@ export default function AdminProjectsPage() {
           return (
             <div
               key={proj.id}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-sky-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
             >
               <div className="space-y-2 max-w-xl">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-sky-600 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
+                  <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                     {proj.referenceNumber}
                   </span>
                   <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
@@ -51,7 +51,7 @@ export default function AdminProjectsPage() {
                     <span className="font-bold text-slate-900">{pct}%</span>
                   </div>
                   <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200">
-                    <div className="bg-sky-600 h-full transition-all duration-300" style={{ width: `${pct}%` }} />
+                    <div className="bg-emerald-600 h-full transition-all duration-300" style={{ width: `${pct}%` }} />
                   </div>
                 </div>
 

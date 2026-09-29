@@ -14,7 +14,9 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
   const { workers, convertRequestToProject } = useApp();
   
   const [selectedWorkerId, setSelectedWorkerId] = useState<string>(workers[0]?.id || '');
-  const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Urgent'>('Medium');
+  const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Urgent'>(
+    request?.urgency || 'Medium'
+  );
   const [adminObservations, setAdminObservations] = useState<string>(
     request ? `${request.serviceCategory} cartridge/hardware requires inspection and possible replacement.` : ''
   );
@@ -38,11 +40,11 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
     setTasks(prev => prev.filter((_, idx) => idx !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedWorkerId) return;
 
-    convertRequestToProject(
+    await convertRequestToProject(
       request.id,
       selectedWorkerId,
       priority,
@@ -59,7 +61,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
         {/* Header */}
         <div className="p-6 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div>
-            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200 uppercase tracking-wider">
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase tracking-wider">
               Service Request Triage ({request.referenceNumber})
             </span>
             <h3 className="text-xl font-bold text-slate-900 mt-1">
@@ -87,9 +89,20 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
               <span className="text-slate-500 font-medium">Property:</span>
               <span className="font-bold text-slate-900">{request.propertyName} ({request.propertyAddress})</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-slate-500 font-medium">Requested Service:</span>
-              <span className="font-bold text-sky-600">{request.serviceCategory}</span>
+              <span className="font-bold text-emerald-600">{request.serviceCategory}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 font-medium">Client Urgency Flag:</span>
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${
+                request.urgency === 'Urgent' ? 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse' :
+                request.urgency === 'High' ? 'bg-amber-100 text-amber-800 border-amber-300' :
+                request.urgency === 'Low' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                'bg-emerald-50 text-emerald-700 border-emerald-200'
+              }`}>
+                {request.urgency || 'Medium'}
+              </span>
             </div>
             <div>
               <span className="text-slate-500 font-medium block mb-1">Client Description:</span>
@@ -109,7 +122,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
               value={adminObservations}
               onChange={e => setAdminObservations(e.target.value)}
               placeholder="Enter initial findings, cartridge models, or notes for technician..."
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm text-slate-800"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-800"
             />
           </div>
 
@@ -117,13 +130,13 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-bold text-slate-900 mb-1.5 flex items-center gap-1.5">
-                <UserCheck className="w-4 h-4 text-sky-600" />
+                <UserCheck className="w-4 h-4 text-emerald-600" />
                 Assign Worker / Technician
               </label>
               <select
                 value={selectedWorkerId}
                 onChange={e => setSelectedWorkerId(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm text-slate-800 bg-white"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-800 bg-white"
                 required
               >
                 {workers.map(w => (
@@ -142,7 +155,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
               <select
                 value={priority}
                 onChange={e => setPriority(e.target.value as any)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm text-slate-800 bg-white"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-800 bg-white"
               >
                 <option value="Low">Low Priority</option>
                 <option value="Medium">Medium Priority</option>
@@ -181,7 +194,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
                 value={newTaskInput}
                 onChange={e => setNewTaskInput(e.target.value)}
                 placeholder="Add checklist item (e.g., Replace faucet washer)"
-                className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-xs text-slate-800"
+                className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs text-slate-800"
                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAddTask(); } }}
               />
               <button
@@ -206,7 +219,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ request,
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold shadow-sm transition-colors"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm transition-colors"
             >
               Create & Assign Project
             </button>

@@ -19,6 +19,8 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+import CameraCaptureModal from '../../../../../components/CameraCaptureModal';
+
 export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const {
@@ -38,8 +40,9 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
   // Quick Upload Form state
   const [photoCategory, setPhotoCategory] = useState<PhotoCategory>('Before');
   const [photoDescription, setPhotoDescription] = useState<string>('');
-  const [photoUrl, setPhotoUrl] = useState<string>('/assets/plumbing_after_tap_1786614934927.jpg');
+  const [photoUrl, setPhotoUrl] = useState<string>('');
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  const [showCameraModal, setShowCameraModal] = useState<boolean>(false);
 
   // Observation State
   const [showObservationModal, setShowObservationModal] = useState<boolean>(false);
@@ -49,7 +52,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
     return (
       <div className="p-6 text-center text-slate-400">
         <p className="text-sm">Job record not found.</p>
-        <Link href="/worker" className="text-xs font-bold text-sky-400 mt-2 block">← Back to Schedule</Link>
+        <Link href="/worker" className="text-xs font-bold text-emerald-400 mt-2 block">← Back to Schedule</Link>
       </div>
     );
   }
@@ -59,7 +62,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
     uploadPhotoEvidence(
       activeJob.id,
       photoCategory,
-      photoDescription || `${photoCategory} evidence uploaded by ${worker.name}`,
+      photoDescription || `${photoCategory} evidence uploaded by ${worker?.name || 'Technician'}`,
       photoUrl
     );
     setPhotoDescription('');
@@ -71,8 +74,8 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
     if (!observationText.trim()) return;
     addTimelineEvent(
       activeJob.id,
-      'Technician Site Observation',
-      observationText.trim()
+      'Field Observation Added',
+      `${observationText} — (Logged by ${worker?.name || 'Technician'})`
     );
     setObservationText('');
     setShowObservationModal(false);
@@ -95,7 +98,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
 
           <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
             activeJob.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
-            activeJob.status === 'In Progress' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' :
+            activeJob.status === 'In Progress' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
             'bg-amber-500/20 text-amber-300 border border-amber-500/30'
           }`}>
             {activeJob.status}
@@ -103,7 +106,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
         </div>
 
         <div>
-          <span className="text-[10px] font-mono font-bold text-sky-400">{activeJob.referenceNumber}</span>
+          <span className="text-[10px] font-mono font-bold text-emerald-400">{activeJob.referenceNumber}</span>
           <h2 className="text-base font-extrabold text-white">{activeJob.propertyName}</h2>
           <p className="text-xs text-slate-300 flex items-center gap-1 mt-0.5">
             <MapPin className="w-3.5 h-3.5 text-rose-400 flex-shrink-0" />
@@ -114,34 +117,52 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
         {/* Quick Field Workflow Action Buttons */}
         <div className="pt-2 grid grid-cols-2 gap-2 text-xs">
           {activeJob.status === 'Scheduled' ? (
-            <button
-              onClick={() => updateProjectStatus(activeJob.id, 'In Progress')}
-              className="col-span-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-md"
-            >
-              <Play className="w-4 h-4" />
-              <span>Arrived & Start Work</span>
-            </button>
+            <>
+              <button
+                onClick={() => setShowCameraModal(true)}
+                className="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+              >
+                <Camera className="w-4 h-4 text-emerald-200" />
+                <span>Snap/Upload Photo</span>
+              </button>
+              <button
+                onClick={() => updateProjectStatus(activeJob.id, 'In Progress')}
+                className="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+              >
+                <Play className="w-4 h-4" />
+                <span>Start Work</span>
+              </button>
+            </>
           ) : activeJob.status === 'In Progress' ? (
             <>
               <button
-                onClick={() => setShowUploadModal(true)}
-                className="py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl flex items-center justify-center gap-1"
+                onClick={() => setShowCameraModal(true)}
+                className="py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer"
               >
                 <Camera className="w-3.5 h-3.5" />
-                <span>Upload Photo</span>
+                <span>Snap/Upload Photo</span>
               </button>
               <button
                 onClick={() => updateProjectStatus(activeJob.id, 'Completed')}
-                className="py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1"
+                className="py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Complete Job</span>
               </button>
             </>
           ) : (
-            <div className="col-span-2 py-2 bg-emerald-950 border border-emerald-700 text-emerald-300 font-bold text-center rounded-xl">
-              ✓ Job Completed & Client Notified
-            </div>
+            <>
+              <button
+                onClick={() => setShowCameraModal(true)}
+                className="py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer"
+              >
+                <Camera className="w-3.5 h-3.5" />
+                <span>Upload Photo</span>
+              </button>
+              <div className="py-2 bg-emerald-950 border border-emerald-700 text-emerald-300 font-bold text-center rounded-xl flex items-center justify-center">
+                ✓ Completed
+              </div>
+            </>
           )}
         </div>
 
@@ -153,7 +174,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
           onClick={() => setShowObservationModal(true)}
           className="flex items-center gap-1 hover:text-white"
         >
-          <Plus className="w-3.5 h-3.5 text-sky-400" />
+          <Plus className="w-3.5 h-3.5 text-emerald-400" />
           <span>Add Observation</span>
         </button>
         <span>•</span>
@@ -181,7 +202,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
             key={tab}
             onClick={() => setActiveJobTab(tab)}
             className={`flex-1 py-2.5 text-center capitalize transition-colors ${
-              activeJobTab === tab ? 'text-sky-400 border-b-2 border-sky-400 font-bold bg-slate-800/40' : 'hover:text-slate-200'
+              activeJobTab === tab ? 'text-emerald-400 border-b-2 border-emerald-400 font-bold bg-slate-800/40' : 'hover:text-slate-200'
             }`}
           >
             {tab}
@@ -195,13 +216,17 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
           <TaskChecklist
             tasks={activeJob.tasks}
             onToggleTask={taskId => toggleTaskCompletion(activeJob.id, taskId)}
+            userRole="worker"
             isEditable={true}
           />
         )}
 
         {activeJobTab === 'photos' && (
           <div className="bg-white p-4 rounded-2xl border border-slate-200">
-            <PhotoGallery photos={activeJob.photos} />
+            <PhotoGallery
+              photos={activeJob.photos}
+              onUploadPhoto={() => setShowCameraModal(true)}
+            />
           </div>
         )}
 
@@ -225,7 +250,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 text-slate-900 shadow-2xl">
             <h3 className="text-base font-bold flex items-center gap-2">
-              <Camera className="w-5 h-5 text-sky-600" />
+              <Camera className="w-5 h-5 text-emerald-600" />
               <span>Upload Proof of Work Photo</span>
             </h3>
 
@@ -255,6 +280,32 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
                 />
               </div>
 
+              <div>
+                <label className="block font-bold mb-1">Select Photo Source</label>
+                {photoUrl ? (
+                  <div className="relative w-full h-32 rounded-xl overflow-hidden border border-slate-300 bg-slate-100 mb-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={photoUrl} alt="Evidence Preview" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setPhotoUrl('')}
+                      className="absolute top-2 right-2 bg-slate-900/80 text-white rounded-full p-1 text-xs"
+                    >
+                      Change
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowCameraModal(true)}
+                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <Camera className="w-4 h-4 text-emerald-400" />
+                    <span>Snap Camera or Select File</span>
+                  </button>
+                )}
+              </div>
+
               <div className="flex gap-2 pt-2">
                 <button
                   type="button"
@@ -265,7 +316,8 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-sky-600 text-white rounded-lg font-bold shadow-xs"
+                  disabled={!photoUrl}
+                  className="flex-1 py-2 bg-emerald-600 text-white rounded-lg font-bold shadow-xs disabled:opacity-50"
                 >
                   Upload Evidence
                 </button>
@@ -280,7 +332,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 text-slate-900 shadow-2xl">
             <h3 className="text-base font-bold flex items-center gap-2">
-              <Plus className="w-5 h-5 text-sky-600" />
+              <Plus className="w-5 h-5 text-emerald-600" />
               <span>Add Field Observation</span>
             </h3>
 
@@ -307,7 +359,7 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-sky-600 text-white rounded-lg font-bold shadow-xs"
+                  className="flex-1 py-2 bg-emerald-600 text-white rounded-lg font-bold shadow-xs"
                 >
                   Save Observation
                 </button>
@@ -316,6 +368,17 @@ export default function WorkerJobDetailPage({ params }: { params: Promise<{ id: 
           </div>
         </div>
       )}
+
+      {/* Camera Capture Modal */}
+      <CameraCaptureModal
+        isOpen={showCameraModal}
+        onClose={() => setShowCameraModal(false)}
+        onPhotoCaptured={(url) => {
+          setPhotoUrl(url);
+          setShowCameraModal(false);
+        }}
+        folder="ojutu/worker-evidence"
+      />
 
     </div>
   );

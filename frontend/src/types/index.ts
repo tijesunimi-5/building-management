@@ -1,5 +1,18 @@
 export type RoleType = 'public' | 'client' | 'admin' | 'worker';
 
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: RoleType;
+  roleTitle?: string;
+  avatarUrl?: string;
+  primaryAddress?: string;
+  emergencyContact?: string;
+  preferredContactMethod?: 'Email' | 'Phone' | 'SMS';
+}
+
 export type PropertyType = 'Single Family Home' | 'Townhouse' | 'Condo / Apartment' | 'Commercial Property';
 
 export type RequestStatus = 'Awaiting Review' | 'Under Review' | 'Approved' | 'Declined' | 'Completed';
@@ -9,6 +22,15 @@ export type ProjectStatus = 'Scheduled' | 'In Progress' | 'Paused' | 'Completed'
 export type PriorityLevel = 'Low' | 'Medium' | 'High' | 'Urgent';
 
 export type PhotoCategory = 'Before' | 'During' | 'After';
+
+export interface PropertyNote {
+  id: string;
+  authorName: string;
+  authorRole: 'Client' | 'Company Admin' | 'Worker Technician';
+  content: string;
+  imageUrl?: string;
+  createdAt: string;
+}
 
 export interface Property {
   id: string;
@@ -24,6 +46,10 @@ export interface Property {
   imageUrl?: string;
   activeProjectsCount: number;
   completedProjectsCount: number;
+  notes?: PropertyNote[];
+  isDisabled?: boolean;
+  disabledAt?: string;
+  disabledBy?: string;
 }
 
 export interface ServiceRequest {
@@ -36,10 +62,12 @@ export interface ServiceRequest {
   serviceCategory: string;
   description: string;
   preferredDate: string;
+  urgency?: PriorityLevel;
   additionalNotes?: string;
   photoUrls: string[];
   status: RequestStatus;
   createdAt: string;
+  isDisabled?: boolean;
 }
 
 export interface TaskItem {
@@ -47,6 +75,11 @@ export interface TaskItem {
   title: string;
   isCompleted: boolean;
   completedAt?: string;
+  status?: 'Pending Admin Review' | 'Approved' | 'Declined';
+  requestedBy?: string;
+  photoUrl?: string;
+  adminNote?: string;
+  isDisabled?: boolean;
 }
 
 export interface PhotoEvidence {
@@ -96,6 +129,9 @@ export interface Project {
   latitude?: number;
   longitude?: number;
   workerCurrentLocation?: { lat: number; lng: number };
+  isDisabled?: boolean;
+  disabledAt?: string;
+  disabledBy?: string;
 }
 
 export interface WorkerInfo {
@@ -117,4 +153,37 @@ export interface AppNotification {
   isRead: boolean;
   projectId?: string;
   roleTarget: 'client' | 'admin' | 'worker';
+}
+
+export interface ChatParticipant {
+  userId: string;
+  name: string;
+  role: 'client' | 'admin' | 'worker';
+  roleTitle?: string;
+  avatarUrl?: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  threadId: string;
+  senderId: string;
+  senderName: string;
+  senderRole: 'client' | 'admin' | 'worker';
+  content: string;
+  attachmentUrls?: string[];
+  createdAt: string;
+}
+
+export interface ChatThread {
+  id: string;
+  title: string;
+  projectId?: string;
+  propertyName?: string;
+  clientId?: string;
+  clientName: string;
+  participants: ChatParticipant[];
+  lastMessage?: string;
+  lastMessageTime?: string;
+  unreadCount?: number;
+  createdAt: string;
 }

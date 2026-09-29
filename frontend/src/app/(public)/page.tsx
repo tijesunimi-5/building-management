@@ -22,7 +22,7 @@ import {
 export default function PublicLandingPage() {
   const services = [
     {
-      icon: <Wrench className="w-6 h-6 text-sky-600" />,
+      icon: <Wrench className="w-6 h-6 text-emerald-600" />,
       title: 'Plumbing & Water Systems',
       description: 'Expert tap repairs, pipe leak detection, cartridge replacements, and emergency plumbing care.'
     },
@@ -105,7 +105,7 @@ export default function PublicLandingPage() {
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-6 text-left">
               
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-sky-400">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-emerald-400">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Canadian Professional Property Care Platform</span>
               </div>
@@ -131,7 +131,7 @@ export default function PublicLandingPage() {
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   href="/client/request"
-                  className="px-7 py-3.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-base shadow-lg shadow-sky-600/30 transition-all duration-200 flex items-center gap-2 group"
+                  className="px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base shadow-lg shadow-emerald-600/30 transition-all duration-200 flex items-center gap-2 group"
                 >
                   <span>Request a Service</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -141,7 +141,7 @@ export default function PublicLandingPage() {
                   href="/login"
                   className="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-base border border-slate-700 transition-all duration-200"
                 >
-                  Client & Staff Login
+                 Login
                 </Link>
               </div>
 
@@ -185,11 +185,11 @@ export default function PublicLandingPage() {
                   {/* Live Progress Bar */}
                   <div className="space-y-1 pt-1">
                     <div className="flex justify-between text-[11px]">
-                      <span className="text-sky-400 font-semibold">Progress</span>
+                      <span className="text-emerald-400 font-semibold">Progress</span>
                       <span className="text-slate-300 font-bold">60% Completed</span>
                     </div>
                     <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                      <div className="bg-sky-500 h-full w-3/5" />
+                      <div className="bg-emerald-500 h-full w-3/5" />
                     </div>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default function PublicLandingPage() {
                 {/* Timeline Event Sample */}
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
-                    <div className="p-2 rounded-lg bg-sky-500/20 text-sky-400">
+                    <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
                       <Camera className="w-4 h-4" />
                     </div>
                     <div className="text-xs">
@@ -222,7 +222,7 @@ export default function PublicLandingPage() {
                 <div className="mt-4 pt-3 border-t border-slate-700 text-center">
                   <Link
                     href="/login"
-                    className="text-xs font-semibold text-sky-400 hover:text-sky-300 flex items-center justify-center gap-1 mx-auto"
+                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center justify-center gap-1 mx-auto"
                   >
                     <span>Click to Sign In & Explore Portals</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -240,7 +240,7 @@ export default function PublicLandingPage() {
       <section id="services" className="py-20 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-600 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+            <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               Professional Capabilities
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
@@ -272,7 +272,7 @@ export default function PublicLandingPage() {
                 <div className="pt-4 mt-4 border-t border-slate-100">
                   <Link
                     href="/client/request"
-                    className="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1 group"
+                    className="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 group"
                   >
                     <span>Request Service</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -288,7 +288,7 @@ export default function PublicLandingPage() {
       <section id="how-it-works" className="py-20 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-600 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+            <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               Transparent 4-Step Process
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
@@ -302,7 +302,7 @@ export default function PublicLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {steps.map((step, idx) => (
               <div key={idx} className="bg-slate-50 rounded-2xl p-6 border border-slate-200 relative group hover:bg-slate-900 hover:text-white transition-all duration-300">
-                <div className="text-3xl font-extrabold text-sky-600 group-hover:text-sky-400 mb-4">
+                <div className="text-3xl font-extrabold text-emerald-600 group-hover:text-emerald-400 mb-4">
                   {step.number}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 group-hover:text-white mb-2">
@@ -320,7 +320,7 @@ export default function PublicLandingPage() {
       {/* About Section */}
       <section id="about" className="py-20 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl space-y-6">
-          <span className="text-xs font-bold uppercase tracking-widest text-sky-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+          <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
             About {BRAND_CONFIG.shortName}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold">
@@ -332,19 +332,19 @@ export default function PublicLandingPage() {
 
           <div className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center border-t border-slate-800">
             <div>
-              <span className="text-3xl font-extrabold text-sky-400 block">100%</span>
+              <span className="text-3xl font-extrabold text-emerald-400 block">100%</span>
               <span className="text-xs text-slate-400 font-medium">Digital Audit Trail</span>
             </div>
             <div>
-              <span className="text-3xl font-extrabold text-sky-400 block">4.9 ★</span>
+              <span className="text-3xl font-extrabold text-emerald-400 block">4.9 ★</span>
               <span className="text-xs text-slate-400 font-medium">Average Review</span>
             </div>
             <div>
-              <span className="text-3xl font-extrabold text-sky-400 block">1,400+</span>
+              <span className="text-3xl font-extrabold text-emerald-400 block">1,400+</span>
               <span className="text-xs text-slate-400 font-medium">Services Completed</span>
             </div>
             <div>
-              <span className="text-3xl font-extrabold text-sky-400 block">24/7</span>
+              <span className="text-3xl font-extrabold text-emerald-400 block">24/7</span>
               <span className="text-xs text-slate-400 font-medium">Portal Access</span>
             </div>
           </div>

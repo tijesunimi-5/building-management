@@ -1,21 +1,33 @@
 {
   "name": "prop-mgt-backend",
   "version": "1.0.0",
-  "description": "REST API backend for ApexCare Property Maintenance SaaS Platform",
+  "description": "REST API backend for Ojutu Property Maintenance SaaS Platform",
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed": "ts-node src/db/seed.ts"
+    "server": "node dist/server.js",
+    "db:init": "ts-node -e \"import { initDb } from './src/db/init'; initDb().then(() => process.exit(0));\"",
+    "db:clear": "ts-node src/db/clear.ts"
   },
-  "keywords": ["property-management", "express", "typescript", "rest-api"],
-  "author": "ApexCare Team",
+  "keywords": [
+    "property-management",
+    "express",
+    "typescript",
+    "rest-api"
+  ],
+  "author": "Ojutu Team",
   "license": "ISC",
   "dependencies": {
+    "@types/multer": "^2.2.0",
+    "@types/pg": "^8.23.1",
+    "cloudinary": "^2.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "multer": "^2.4.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

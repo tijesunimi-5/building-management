@@ -18,10 +18,10 @@ export default function WorkerSchedulePage() {
             key={proj.id}
             href={`/worker/jobs/${proj.id}`}
             onClick={() => setSelectedProjectId(proj.id)}
-            className="block bg-slate-900 p-4 rounded-2xl border border-slate-800 hover:border-sky-500 transition-all space-y-3 shadow-sm"
+            className="block bg-slate-900 p-4 rounded-2xl border border-slate-800 hover:border-emerald-500 transition-all space-y-3 shadow-sm"
           >
             <div className="flex items-center justify-between text-xs">
-              <span className="font-mono font-bold text-sky-400">{proj.referenceNumber}</span>
+              <span className="font-mono font-bold text-emerald-400">{proj.referenceNumber}</span>
               <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px] font-bold">
                 {proj.status}
               </span>
@@ -37,7 +37,7 @@ export default function WorkerSchedulePage() {
 
             <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-xs">
               <span className="text-slate-400 font-medium">{proj.serviceCategory}</span>
-              <span className="px-3 py-1 bg-sky-600 text-white rounded-lg font-bold text-[11px] flex items-center gap-1">
+              <span className="px-3 py-1 bg-emerald-600 text-white rounded-lg font-bold text-[11px] flex items-center gap-1">
                 Open Job <ArrowRight className="w-3 h-3" />
               </span>
             </div>

@@ -9,7 +9,7 @@ export default function AdminSettingsPage() {
     <div className="max-w-2xl space-y-6">
       <div>
         <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-          <Settings className="w-6 h-6 text-sky-600" />
+          <Settings className="w-6 h-6 text-emerald-600" />
           <span>Platform & Branding Settings</span>
         </h1>
         <p className="text-sm text-slate-600">Configure company identity, contact numbers, and dispatch settings.</p>
@@ -32,7 +32,7 @@ export default function AdminSettingsPage() {
         </div>
 
         <div className="pt-2">
-          <button className="px-5 py-2.5 bg-sky-600 text-white rounded-xl font-bold text-xs shadow-xs">
+          <button className="px-5 py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-xs">
             Save Platform Settings
           </button>
         </div>

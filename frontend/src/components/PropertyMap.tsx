@@ -39,7 +39,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200 shadow-2xs transition-colors"
         >
-          <ExternalLink className="w-3.5 h-3.5 text-sky-600" />
+          <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
           <span>Open in Google Maps</span>
         </a>
       </div>
@@ -74,7 +74,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
         </div>
 
         {/* Worker Location Marker */}
-        <div className="absolute top-1/3 left-2/3 flex items-center gap-2 bg-sky-600/95 text-white text-xs font-semibold px-2.5 py-1.5 rounded-full shadow-lg border border-sky-400 backdrop-blur-xs z-10">
+        <div className="absolute top-1/3 left-2/3 flex items-center gap-2 bg-emerald-600/95 text-white text-xs font-semibold px-2.5 py-1.5 rounded-full shadow-lg border border-emerald-400 backdrop-blur-xs z-10">
           <Navigation className="w-3.5 h-3.5 animate-pulse text-amber-300" />
           <span>{workerName} (En Route)</span>
         </div>

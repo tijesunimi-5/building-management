@@ -29,9 +29,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           <div>
             <h5 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3">Service Areas</h5>
             <ul className="space-y-1.5 text-xs">
-              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-sky-400" /> Greater Toronto Area (GTA)</li>
-              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-sky-400" /> Vancouver & Lower Mainland</li>
-              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-sky-400" /> Calgary & Ottawa Region</li>
+              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-emerald-400" /> Greater Toronto Area (GTA)</li>
+              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-emerald-400" /> Vancouver & Lower Mainland</li>
+              <li className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-emerald-400" /> Calgary & Ottawa Region</li>
             </ul>
           </div>
 
@@ -49,7 +49,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <p className="text-xs text-slate-400 mb-3">Access your property dashboard, admin dispatch, or worker job list.</p>
             <Link
               href="/login"
-              className="block text-center w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold transition-colors"
+              className="block text-center w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-colors"
             >
               Sign In to Platform
             </Link>

@@ -1,6 +1,17 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { initDb } from './db/init';
+
+// Import Modular Routers
+import healthRouter from './routes/health';
+import authRouter from './routes/auth';
+import propertiesRouter from './routes/properties';
+import requestsRouter from './routes/requests';
+import projectsRouter from './routes/projects';
+import workersRouter from './routes/workers';
+import uploadRouter from './routes/upload';
+import messagesRouter from './routes/messages';
 
 dotenv.config();
 
@@ -10,55 +21,22 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Health Check Endpoint
-app.get('/api/v1/health', (_req: Request, res: Response) => {
-  res.json({
-    status: 'online',
-    service: 'ApexCare Property Maintenance API',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0'
-  });
-});
+// Optional DB Init (Only runs if AUTO_INIT_DB=true is explicitly set in env)
+if (process.env.AUTO_INIT_DB === 'true') {
+  initDb().catch((err) => console.error('Failed to initialize database:', err));
+}
 
-// Demo Data Routes
-app.get('/api/v1/properties', (_req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: [
-      {
-        id: 'prop-1',
-        name: 'Thompson Residence',
-        address: '142 Yorkville Ave',
-        city: 'Toronto',
-        province: 'ON',
-        postalCode: 'M5R 1C2',
-        propertyType: 'SINGLE_FAMILY',
-        clientName: 'Michael Thompson'
-      },
-      {
-        id: 'prop-2',
-        name: 'Williams Family Home',
-        address: '88 Forest Hill Rd',
-        city: 'Toronto',
-        province: 'ON',
-        postalCode: 'M4V 2L7',
-        propertyType: 'SINGLE_FAMILY',
-        clientName: 'Sarah Williams'
-      },
-      {
-        id: 'prop-3',
-        name: 'Anderson Property',
-        address: '320 Bay St, Suite 1400',
-        city: 'Toronto',
-        province: 'ON',
-        postalCode: 'M5H 4A6',
-        propertyType: 'CONDO',
-        clientName: 'David Anderson'
-      }
-    ]
-  });
-});
+// Mount REST API Routers
+app.use('/api/v1/health', healthRouter);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/properties', propertiesRouter);
+app.use('/api/v1/requests', requestsRouter);
+app.use('/api/v1/projects', projectsRouter);
+app.use('/api/v1/workers', workersRouter);
+app.use('/api/v1/upload', uploadRouter);
+app.use('/api/v1/messages', messagesRouter);
 
 app.listen(PORT, () => {
-  console.log(`ApexCare Backend API running on port ${PORT}`);
+  console.log(`ApexCare Express REST API Server running on port ${PORT}`);
+  console.log(`Connected to Neon PostgreSQL Database`);
 });

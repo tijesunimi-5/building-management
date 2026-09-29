@@ -13,7 +13,7 @@ export const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ events, onOpen
   const getEventIcon = (type?: TimelineEvent['iconType']) => {
     switch (type) {
       case 'request':
-        return <FileText className="w-4 h-4 text-sky-600" />;
+        return <FileText className="w-4 h-4 text-emerald-600" />;
       case 'project':
         return <FolderPlus className="w-4 h-4 text-indigo-600" />;
       case 'worker':
@@ -34,7 +34,7 @@ export const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ events, onOpen
   const getEventBadge = (authorRole: TimelineEvent['authorRole']) => {
     switch (authorRole) {
       case 'Client':
-        return 'bg-sky-50 text-sky-700 border-sky-200';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Company Admin':
         return 'bg-slate-100 text-slate-700 border-slate-300';
       case 'Worker Technician':
@@ -49,7 +49,7 @@ export const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ events, onOpen
       {events.map((evt, idx) => (
         <div key={evt.id || idx} className="relative group">
           {/* Icon Bubble */}
-          <div className="absolute -left-6 sm:-left-8 top-0.5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-slate-200 shadow-sm flex items-center justify-center group-hover:border-sky-500 transition-colors">
+          <div className="absolute -left-6 sm:-left-8 top-0.5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-slate-200 shadow-sm flex items-center justify-center group-hover:border-emerald-500 transition-colors">
             {getEventIcon(evt.iconType)}
           </div>
 

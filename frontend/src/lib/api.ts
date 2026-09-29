@@ -1,0 +1,234 @@
+import { Property, ServiceRequest, Project, WorkerInfo, UserProfile } from '../types';
+
+const rawBase = process.env.NEXT_PUBLIC_API_URL || 'https://building-management-backend-0v3l.onrender.com/api/v1';
+const API_BASE = rawBase.endsWith('/api/v1') ? rawBase : `${rawBase.replace(/\/$/, '')}/api/v1`;
+
+export async function fetchPropertiesFromApi(): Promise<Property[]> {
+  try {
+    const res = await fetch(`${API_BASE}/properties`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Properties API error:', err);
+    return [];
+  }
+}
+
+export async function loginWithApi(email: string, password?: string): Promise<UserProfile> {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Login failed');
+  return json.data;
+}
+
+export async function updateUserProfileApi(userId: string, updates: Partial<UserProfile>): Promise<UserProfile> {
+  const res = await fetch(`${API_BASE}/auth/profile/${userId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates)
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to update user profile in DB');
+  return json.data;
+}
+
+export async function fetchUserProfileApi(userId: string): Promise<UserProfile | null> {
+  try {
+    const res = await fetch(`${API_BASE}/auth/profile/${userId}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json.success ? json.data : null;
+  } catch (err) {
+    console.warn('Fetch profile API error:', err);
+    return null;
+  }
+}
+
+export async function fetchRequestsFromApi(): Promise<ServiceRequest[]> {
+  try {
+    const res = await fetch(`${API_BASE}/requests`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Requests API error:', err);
+    return [];
+  }
+}
+
+export async function createRequestApi(requestData: {
+  propertyId?: string;
+  propertyName?: string;
+  propertyAddress?: string;
+  clientName?: string;
+  serviceCategory: string;
+  description: string;
+  preferredDate?: string;
+  urgency?: string;
+  additionalNotes?: string;
+  photoUrls?: string[];
+}): Promise<ServiceRequest> {
+  const res = await fetch(`${API_BASE}/requests`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestData)
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to create request');
+  return json.data;
+}
+
+export async function fetchProjectsFromApi(): Promise<Project[]> {
+  try {
+    const res = await fetch(`${API_BASE}/projects`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Projects API error:', err);
+    return [];
+  }
+}
+
+export async function fetchProjectByIdApi(id: string): Promise<Project> {
+  const res = await fetch(`${API_BASE}/projects/${id}`, { cache: 'no-store' });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to fetch project');
+  return json.data;
+}
+
+export async function triageProjectApi(data: {
+  requestId: string;
+  workerId: string;
+  priority: 'Low' | 'Medium' | 'High' | 'Urgent';
+  adminObservations: string;
+  tasks: string[];
+}): Promise<Project> {
+  const res = await fetch(`${API_BASE}/projects/triage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to triage project');
+  return json.data;
+}
+
+export async function fetchWorkersFromApi(): Promise<WorkerInfo[]> {
+  try {
+    const res = await fetch(`${API_BASE}/workers`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Workers API error:', err);
+    return [];
+  }
+}
+
+export async function addWorkerApi(workerData: {
+  name: string;
+  roleTitle?: string;
+  phone?: string;
+  email?: string;
+  avatarUrl?: string;
+}): Promise<WorkerInfo> {
+  const res = await fetch(`${API_BASE}/workers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(workerData)
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to add worker');
+  return json.data;
+}
+
+export async function removeWorkerApi(workerId: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/workers/${workerId}`, {
+    method: 'DELETE'
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to remove worker');
+}
+
+// Chat Messaging API Functions
+export async function fetchChatThreadsApi(): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/messages/threads`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Chat threads API error:', err);
+    return [];
+  }
+}
+
+export async function fetchThreadMessagesApi(threadId: string): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/messages/threads/${threadId}/messages`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch (err) {
+    console.warn('Thread messages API error:', err);
+    return [];
+  }
+}
+
+export async function sendChatMessageApi(
+  threadId: string,
+  senderId: string,
+  senderName: string,
+  senderRole: string,
+  content: string,
+  attachmentUrls?: string[]
+): Promise<any> {
+  const res = await fetch(`${API_BASE}/messages/threads/${threadId}/messages`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ senderId, senderName, senderRole, content, attachmentUrls })
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to send message');
+  return json.data;
+}
+
+export async function inviteWorkerToThreadApi(
+  threadId: string,
+  userId: string,
+  userName: string,
+  userRole: string = 'worker',
+  roleTitle: string = 'Field Technician',
+  avatarUrl?: string
+): Promise<any> {
+  const res = await fetch(`${API_BASE}/messages/threads/${threadId}/participants`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId, userName, userRole, roleTitle, avatarUrl })
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to invite participant to thread');
+  return json.data;
+}
+
+export async function createNewThreadApi(
+  title: string,
+  projectId?: string,
+  clientId?: string,
+  clientName?: string
+): Promise<any> {
+  const res = await fetch(`${API_BASE}/messages/threads`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, projectId, clientId, clientName })
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to create new thread');
+  return json.data;
+}

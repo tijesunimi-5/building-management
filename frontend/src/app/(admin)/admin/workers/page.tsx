@@ -14,15 +14,15 @@ export default function AdminWorkersPage() {
   const [email, setEmail] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('/assets/worker_avatar_1786614986847.jpg');
 
-  const handleAddSubmit = (e: React.FormEvent) => {
+  const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    addWorker({
+    await addWorker({
       name,
       roleTitle,
       phone,
-      email: email || `${name.toLowerCase().replace(/\s+/g, '.')}@apexcare-demo.ca`,
+      email: email || `${name.toLowerCase().replace(/\s+/g, '.')}@ojutu-demo.ca`,
       avatarUrl
     });
 
@@ -37,7 +37,7 @@ export default function AdminWorkersPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-            <HardHat className="w-6 h-6 text-sky-600" />
+            <HardHat className="w-6 h-6 text-emerald-600" />
             <span>Field Technicians & Worker Management</span>
           </h1>
           <p className="text-sm text-slate-600">
@@ -47,7 +47,7 @@ export default function AdminWorkersPage() {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-xs shadow-sm transition-colors flex items-center gap-1.5"
+          className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-sm transition-colors flex items-center gap-1.5"
         >
           <UserPlus className="w-4 h-4" />
           <span>+ Add New Technician</span>
@@ -113,7 +113,7 @@ export default function AdminWorkersPage() {
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 text-slate-900 shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <h3 className="text-lg font-bold flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-sky-600" />
+                <UserPlus className="w-5 h-5 text-emerald-600" />
                 <span>Add New Technician</span>
               </h3>
               <button onClick={() => setShowAddModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
@@ -130,7 +130,7 @@ export default function AdminWorkersPage() {
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder="e.g. Robert Miller"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
 
@@ -142,7 +142,7 @@ export default function AdminWorkersPage() {
                   value={roleTitle}
                   onChange={e => setRoleTitle(e.target.value)}
                   placeholder="e.g. Senior Carpentry Technician"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
 
@@ -154,7 +154,7 @@ export default function AdminWorkersPage() {
                     required
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </div>
 
@@ -165,7 +165,7 @@ export default function AdminWorkersPage() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Auto-generated if empty"
-                    className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default function AdminWorkersPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold shadow-xs"
+                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-xs"
                 >
                   Add Technician
                 </button>
