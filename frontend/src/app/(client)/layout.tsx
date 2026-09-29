@@ -58,7 +58,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div className="md:hidden bg-slate-900 text-white px-4 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between sticky top-0 z-40 shadow-md">
         <Link href="/client" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-9 w-auto object-contain" />
+          <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-12 w-auto object-contain" />
           <span className="text-xs text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-800/40">Client Portal</span>
         </Link>
 
@@ -97,7 +97,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <div className="flex items-center justify-between pb-6 border-b border-slate-800">
                 <Link href="/client" className="flex items-center gap-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-10 w-auto object-contain" />
+                  <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-13 w-auto object-contain" />
                   <span className="text-[11px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-800/40">Client Portal</span>
                 </Link>
 
@@ -163,7 +163,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           <div className="flex items-center justify-between pb-6 border-b border-slate-800">
             <Link href="/" className="flex flex-col gap-1.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-11 w-auto object-contain self-start" />
+              <img src={BRAND_CONFIG.logoWhite} alt={BRAND_CONFIG.companyName} className="h-14 md:h-16 max-h-16 w-auto object-contain self-start" />
               <span className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-800/40 w-max">Client Portal</span>
             </Link>
             <button

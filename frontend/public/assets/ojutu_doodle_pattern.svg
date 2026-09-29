@@ -1,108 +1,260 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
   <defs>
     <style>
-      .icon { fill: none; stroke: #10b981; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.18; }
-      .icon-alt { fill: none; stroke: #34d399; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.14; }
-      .icon-accent { fill: none; stroke: #059669; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.22; }
+      .icon { fill: none; stroke: #10b981; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.22; }
+      .icon-alt { fill: none; stroke: #34d399; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.18; }
+      .icon-accent { fill: none; stroke: #059669; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.26; }
+      .icon-bright { fill: none; stroke: #6ee7b7; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.20; }
     </style>
   </defs>
   
-  <rect width="360" height="360" fill="#0b131e"/>
+  <rect width="500" height="500" fill="#0b131e"/>
 
-  <!-- Row 1 -->
+  <!-- Row 1 (y: 25-45) -->
   <!-- Home -->
-  <g transform="translate(30, 30) rotate(-10) scale(0.9)" class="icon">
+  <g transform="translate(25, 25) rotate(-10) scale(0.85)" class="icon">
     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
     <polyline points="9 22 9 12 15 12 15 22"/>
   </g>
-
   <!-- Wrench -->
-  <g transform="translate(120, 25) rotate(25) scale(0.85)" class="icon-alt">
+  <g transform="translate(90, 20) rotate(25) scale(0.8)" class="icon-alt">
     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
   </g>
-
   <!-- Key -->
-  <g transform="translate(210, 35) rotate(-15) scale(0.85)" class="icon">
+  <g transform="translate(155, 30) rotate(-15) scale(0.8)" class="icon">
     <circle cx="7.5" cy="15.5" r="5.5"/>
     <path d="M11.4 11.6L21 2l2 2-2 2 2 2-3 3"/>
   </g>
-
   <!-- Hard Hat -->
-  <g transform="translate(300, 25) rotate(10) scale(0.8)" class="icon-accent">
+  <g transform="translate(220, 20) rotate(10) scale(0.75)" class="icon-accent">
     <path d="M2 18h20"/>
     <path d="M5 18a7 7 0 0 1 14 0"/>
     <path d="M12 4v7"/>
   </g>
-
-  <!-- Row 2 -->
+  <!-- Lightbulb -->
+  <g transform="translate(285, 25) rotate(-5) scale(0.8)" class="icon-bright">
+    <path d="M9 18h6m-5 3h4m-7-9a7 7 0 1 1 12 0c0 2.5-1.5 4-2.5 5.5h-7C8.5 16 7 14.5 7 12z"/>
+  </g>
+  <!-- Paint Roller -->
+  <g transform="translate(350, 20) rotate(15) scale(0.8)" class="icon">
+    <rect x="4" y="2" width="16" height="7" rx="2"/>
+    <path d="M20 5.5h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-8v4"/>
+    <rect x="10" y="17.5" width="4" height="6" rx="1"/>
+  </g>
   <!-- Shield -->
-  <g transform="translate(60, 110) rotate(15) scale(0.85)" class="icon-accent">
+  <g transform="translate(425, 25) rotate(-12) scale(0.8)" class="icon-accent">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
   </g>
 
+  <!-- Row 2 (y: 90-110) -->
   <!-- Paintbrush -->
-  <g transform="translate(150, 105) rotate(-30) scale(0.8)" class="icon">
+  <g transform="translate(30, 95) rotate(-30) scale(0.75)" class="icon-bright">
     <path d="M18.37 2.63a2.12 2.12 0 0 1 3 3L14 13l-4-4 8.37-6.37z"/>
     <path d="M9 14l-4 4v3h3l4-4"/>
   </g>
-
   <!-- Droplet -->
-  <g transform="translate(240, 115) rotate(5) scale(0.85)" class="icon-alt">
+  <g transform="translate(95, 100) rotate(5) scale(0.8)" class="icon-alt">
     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
   </g>
-
   <!-- Zap -->
-  <g transform="translate(320, 110) rotate(-10) scale(0.85)" class="icon">
+  <g transform="translate(160, 90) rotate(-10) scale(0.8)" class="icon">
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
   </g>
-
-  <!-- Row 3 -->
+  <!-- Lock -->
+  <g transform="translate(225, 95) rotate(8) scale(0.8)" class="icon-alt">
+    <rect x="5" y="11" width="14" height="10" rx="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </g>
   <!-- Hammer -->
-  <g transform="translate(25, 195) rotate(35) scale(0.85)" class="icon-alt">
+  <g transform="translate(290, 90) rotate(35) scale(0.8)" class="icon-accent">
     <path d="M15 12l-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/>
     <path d="M17.64 4.36L20.47 7.2a2 2 0 0 1 0 2.83L18 12.5 11.5 6l2.47-2.47a2 2 0 0 1 2.83 0z"/>
   </g>
-
   <!-- Building -->
-  <g transform="translate(110, 190) rotate(-5) scale(0.8)" class="icon-accent">
-    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-    <path d="M9 22v-4h6v4"/>
-    <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/>
+  <g transform="translate(355, 95) rotate(-5) scale(0.75)" class="icon">
+    <rect x="4" y="2" width="16" height="20" rx="2"/>
+    <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M8 10h.01M16 10h.01"/>
   </g>
-
   <!-- Camera -->
-  <g transform="translate(200, 200) rotate(12) scale(0.8)" class="icon">
+  <g transform="translate(430, 95) rotate(12) scale(0.75)" class="icon-bright">
     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
     <circle cx="12" cy="13" r="4"/>
   </g>
 
+  <!-- Row 3 (y: 160-180) -->
   <!-- CheckCircle -->
-  <g transform="translate(290, 195) rotate(-20) scale(0.85)" class="icon-alt">
+  <g transform="translate(25, 165) rotate(-20) scale(0.8)" class="icon-accent">
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
     <polyline points="22 4 12 14.01 9 11.01"/>
   </g>
-
-  <!-- Row 4 -->
   <!-- Cog / Gear -->
-  <g transform="translate(50, 280) rotate(20) scale(0.8)" class="icon">
+  <g transform="translate(90, 160) rotate(20) scale(0.75)" class="icon">
     <circle cx="12" cy="12" r="3"/>
-    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
   </g>
-
   <!-- Sparkles -->
-  <g transform="translate(140, 275) rotate(-15) scale(0.85)" class="icon-alt">
+  <g transform="translate(155, 170) rotate(-15) scale(0.8)" class="icon-bright">
     <path d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/>
   </g>
-
-  <!-- Clipboard / List -->
-  <g transform="translate(230, 285) rotate(8) scale(0.8)" class="icon-accent">
+  <!-- Clipboard -->
+  <g transform="translate(220, 160) rotate(8) scale(0.75)" class="icon-alt">
     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+    <rect x="8" y="2" width="8" height="4" rx="1"/>
     <path d="M9 12h6M9 16h6"/>
   </g>
-
-  <!-- Thermometer / HVAC -->
-  <g transform="translate(310, 275) rotate(-25) scale(0.85)" class="icon">
+  <!-- Thermometer -->
+  <g transform="translate(285, 165) rotate(-25) scale(0.8)" class="icon">
     <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
   </g>
+  <!-- Screwdriver -->
+  <g transform="translate(350, 160) rotate(40) scale(0.8)" class="icon-accent">
+    <path d="M18 2l4 4-8 8h-4v-4l8-8z"/>
+    <path d="M10 14l-8 8"/>
+  </g>
+  <!-- Tape Measure / Ruler -->
+  <g transform="translate(425, 165) rotate(-10) scale(0.8)" class="icon-alt">
+    <rect x="3" y="6" width="18" height="12" rx="2"/>
+    <path d="M7 6v4M11 6v3M15 6v4M19 6v3"/>
+  </g>
+
+  <!-- Row 4 (y: 230-250) -->
+  <!-- Truck / Van -->
+  <g transform="translate(30, 235) rotate(5) scale(0.75)" class="icon-bright">
+    <rect x="1" y="3" width="15" height="13" rx="2"/>
+    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+    <circle cx="5.5" cy="18.5" r="2.5"/>
+    <circle cx="18.5" cy="18.5" r="2.5"/>
+  </g>
+  <!-- Plug / Electricity -->
+  <g transform="translate(95, 230) rotate(-20) scale(0.8)" class="icon-accent">
+    <path d="M12 22v-6M9 8V2M15 8V2M6 8h12v4a6 6 0 0 1-12 0V8z"/>
+  </g>
+  <!-- Flame / HVAC -->
+  <g transform="translate(160, 240) rotate(10) scale(0.8)" class="icon">
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/>
+  </g>
+  <!-- Saw -->
+  <g transform="translate(225, 230) rotate(-35) scale(0.75)" class="icon-alt">
+    <path d="M3 17l14-14 4 4-14 14z"/>
+    <path d="M3 17l2-2 2 2 2-2 2 2 2-2 2 2"/>
+  </g>
+  <!-- Level -->
+  <g transform="translate(290, 235) rotate(15) scale(0.8)" class="icon-bright">
+    <rect x="2" y="8" width="20" height="8" rx="2"/>
+    <circle cx="12" cy="12" r="2"/>
+  </g>
+  <!-- Roof -->
+  <g transform="translate(355, 230) rotate(-5) scale(0.8)" class="icon">
+    <polyline points="2 12 12 2 22 12"/>
+    <path d="M4 10v10h16V10"/>
+  </g>
+  <!-- Window -->
+  <g transform="translate(430, 235) rotate(8) scale(0.75)" class="icon-accent">
+    <rect x="4" y="4" width="16" height="16" rx="2"/>
+    <path d="M12 4v16M4 12h16"/>
+  </g>
+
+  <!-- Row 5 (y: 300-320) -->
+  <!-- Ladder -->
+  <g transform="translate(25, 305) rotate(15) scale(0.8)" class="icon">
+    <path d="M8 2v20M16 2v20M8 6h8M8 11h8M8 16h8"/>
+  </g>
+  <!-- Pliers -->
+  <g transform="translate(90, 300) rotate(-25) scale(0.75)" class="icon-bright">
+    <path d="M14 9l6-6M10 9L4 3M9 14l-5 5M15 14l5 5"/>
+    <circle cx="12" cy="11" r="3"/>
+  </g>
+  <!-- Fan / Vent -->
+  <g transform="translate(155, 310) rotate(30) scale(0.8)" class="icon-alt">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 12a4 4 0 0 1 4-4c2 0 3 2 1 4s-4 1-5 0zm0 0a4 4 0 0 1-4 4c0 2 2 3 4 1s1-4 0-5zm0 0a4 4 0 0 1-4-4c-2 0-3-2-1-4s4-1 5 0z"/>
+  </g>
+  <!-- Nut / Bolt -->
+  <g transform="translate(220, 300) rotate(-10) scale(0.8)" class="icon-accent">
+    <polygon points="12 2 19 6 19 14 12 18 5 14 5 6"/>
+    <circle cx="12" cy="10" r="3"/>
+  </g>
+  <!-- Solar Panel -->
+  <g transform="translate(285, 305) rotate(12) scale(0.75)" class="icon">
+    <polygon points="4 6 20 4 21 16 3 18"/>
+    <path d="M12 5v12M4 12l17-3"/>
+  </g>
+  <!-- Pipe / Plumbing Joint -->
+  <g transform="translate(350, 300) rotate(-20) scale(0.8)" class="icon-bright">
+    <path d="M4 4h6v6H4zM14 14h6v6h-6zM10 7h7v7"/>
+  </g>
+  <!-- Compass / Drafting -->
+  <g transform="translate(425, 305) rotate(5) scale(0.8)" class="icon-alt">
+    <circle cx="12" cy="5" r="2"/>
+    <path d="M6 21l5-14M18 21l-5-14M8 15h8"/>
+  </g>
+
+  <!-- Row 6 (y: 370-390) -->
+  <!-- House Check -->
+  <g transform="translate(30, 375) rotate(-8) scale(0.8)" class="icon-accent">
+    <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 12 11 14 15 10"/>
+  </g>
+  <!-- Goggles / Safety -->
+  <g transform="translate(95, 370) rotate(18) scale(0.75)" class="icon">
+    <circle cx="7" cy="13" r="4"/>
+    <circle cx="17" cy="13" r="4"/>
+    <path d="M11 13h2M3 13H1M21 13h2"/>
+  </g>
+  <!-- Star / Quality -->
+  <g transform="translate(160, 380) rotate(-12) scale(0.8)" class="icon-bright">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </g>
+  <!-- Clock / Scheduled -->
+  <g transform="translate(225, 370) rotate(8) scale(0.8)" class="icon-alt">
+    <circle cx="12" cy="12" r="9"/>
+    <polyline points="12 6 12 12 16 14"/>
+  </g>
+  <!-- Tag / Asset -->
+  <g transform="translate(290, 375) rotate(-22) scale(0.75)" class="icon-accent">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+    <line x1="7" y1="7" x2="7.01" y2="7"/>
+  </g>
+  <!-- Magnifier / Inspection -->
+  <g transform="translate(355, 370) rotate(15) scale(0.8)" class="icon">
+    <circle cx="11" cy="11" r="7"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </g>
+  <!-- Wrench + Hammer Cross -->
+  <g transform="translate(430, 375) rotate(-10) scale(0.75)" class="icon-bright">
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+  </g>
+
+  <!-- Row 7 (y: 440-460) -->
+  <!-- Key 2 -->
+  <g transform="translate(25, 445) rotate(20) scale(0.8)" class="icon-alt">
+    <circle cx="7.5" cy="15.5" r="5.5"/>
+    <path d="M11.4 11.6L21 2l2 2-2 2 2 2-3 3"/>
+  </g>
+  <!-- Hard Hat 2 -->
+  <g transform="translate(90, 440) rotate(-15) scale(0.75)" class="icon-accent">
+    <path d="M2 18h20M5 18a7 7 0 0 1 14 0M12 4v7"/>
+  </g>
+  <!-- Shield 2 -->
+  <g transform="translate(155, 450) rotate(10) scale(0.8)" class="icon">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </g>
+  <!-- Droplet 2 -->
+  <g transform="translate(220, 440) rotate(-5) scale(0.8)" class="icon-bright">
+    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+  </g>
+  <!-- Zap 2 -->
+  <g transform="translate(285, 445) rotate(25) scale(0.75)" class="icon-alt">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+  </g>
+  <!-- Home 2 -->
+  <g transform="translate(350, 440) rotate(-15) scale(0.8)" class="icon-accent">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </g>
+  <!-- Paintbrush 2 -->
+  <g transform="translate(425, 445) rotate(12) scale(0.75)" class="icon">
+    <path d="M18.37 2.63a2.12 2.12 0 0 1 3 3L14 13l-4-4 8.37-6.37zM9 14l-4 4v3h3l4-4"/>
+  </g>
+
 </svg>

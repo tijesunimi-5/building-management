@@ -23,7 +23,7 @@ export const HeaderNav: React.FC = () => {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[64px] sm:h-20 py-2 sm:py-0 flex items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[72px] sm:h-24 py-2 sm:py-0 flex items-center justify-between gap-2">
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center flex-shrink-0 group">
@@ -31,7 +31,7 @@ export const HeaderNav: React.FC = () => {
             <img
               src={BRAND_CONFIG.logoTransparent}
               alt={BRAND_CONFIG.shortName}
-              className="h-11 sm:h-14 md:h-16 max-h-16 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-14 sm:h-20 md:h-24 max-h-24 w-auto object-contain transition-transform group-hover:scale-105"
             />
           </Link>
 
