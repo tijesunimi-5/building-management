@@ -90,11 +90,11 @@ export default function PublicLandingPage() {
     <div className="bg-white min-h-screen text-slate-800 font-sans">
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-slate-900 text-white pt-16 pb-24 lg:pt-24 lg:pb-32">
+      <section className="relative overflow-hidden bg-dashboard-doodle text-white pt-16 pb-24 lg:pt-24 lg:pb-32 border-b border-slate-800">
         <div 
-          className="absolute inset-0 opacity-10 pointer-events-none"
+          className="absolute inset-0 opacity-15 pointer-events-none"
           style={{
-            backgroundImage: `radial-gradient(#38bdf8 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(#10b981 1px, transparent 1px)`,
             backgroundSize: '32px 32px'
           }}
         />
@@ -318,7 +318,7 @@ export default function PublicLandingPage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-slate-900 text-white">
+      <section id="about" className="py-20 bg-dashboard-doodle text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
             About {BRAND_CONFIG.shortName}
