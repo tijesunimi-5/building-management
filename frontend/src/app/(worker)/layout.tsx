@@ -18,7 +18,7 @@ export default function WorkerLayout({ children }: { children: React.ReactNode }
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center justify-start py-4 px-2 sm:px-4 font-sans">
       
       {/* Mobile Frame Outer Shell */}
-      <div className="w-full max-w-md bg-slate-950 rounded-3xl border-4 border-slate-800 shadow-2xl overflow-hidden flex flex-col min-h-[800px] relative">
+      <div className="w-full max-w-md bg-dashboard-doodle rounded-3xl border-4 border-slate-800 shadow-2xl overflow-hidden flex flex-col min-h-[800px] relative">
         
         {/* Mobile Header */}
         <div className="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between sticky top-0 z-30">

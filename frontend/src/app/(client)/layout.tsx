@@ -52,7 +52,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row font-sans overflow-x-hidden w-full">
+    <div className="min-h-screen bg-dashboard-doodle flex flex-col md:flex-row font-sans overflow-x-hidden w-full text-slate-100">
       
       {/* Mobile Top Header */}
       <div className="md:hidden bg-slate-900 text-white px-4 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between sticky top-0 z-40 shadow-md">

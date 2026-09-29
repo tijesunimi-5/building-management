@@ -407,7 +407,7 @@ export default function ClientMessagesPage() {
           )}
 
           {/* Messages Feed */}
-          <div className="p-4 flex-1 overflow-y-auto space-y-4 max-h-[420px] min-h-[380px] bg-slate-50/30">
+          <div className="p-4 flex-1 overflow-y-auto space-y-4 max-h-[420px] min-h-[380px] bg-dashboard-doodle">
             {isLoadingMessages ? (
               <div className="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
                 <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
